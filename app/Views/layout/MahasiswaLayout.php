@@ -27,7 +27,7 @@
                 <?php $currentUri = uri_string(); ?>
 
                 <a 
-                    href="<?= base_url('/admin/dashboard') ?>" 
+                    href="<?= base_url('/mahasiswa/dashboard') ?>" 
                     class="flex items-center gap-3 rounded-xl px-3 py-3 transition duration-200 <?= strpos($currentUri, 'dashboard') !== false ? 'bg-white text-[#4f2782] shadow-md' : 'hover:bg-white hover:shadow-md hover:text-[#4f2782]' ?>"
                 >
                     <i class="bi bi-speedometer2 flex-shrink-0 text-lg"></i>
@@ -35,19 +35,11 @@
                 </a>
 
                 <a 
-                    href="<?= base_url('/admin/admissions') ?>" 
-                    class="flex items-center gap-3 rounded-xl px-3 py-3 transition duration-200 <?= strpos($currentUri, 'admissions') !== false ? 'bg-white text-[#4f2782] shadow-md' : 'hover:bg-white hover:shadow-md hover:text-[#4f2782]' ?>"
+                    href="<?= base_url('/mahasiswa/apply') ?>" 
+                    class="flex items-center gap-3 rounded-xl px-3 py-3 transition duration-200 <?= strpos($currentUri, 'apply') !== false ? 'bg-white text-[#4f2782] shadow-md' : 'hover:bg-white hover:shadow-md hover:text-[#4f2782]' ?>"
                 >
                     <i class="bi bi-book flex-shrink-0 text-lg"></i>
-                    <span class="truncate">Admissions</span>
-                </a>
-
-                <a 
-                    href="<?= base_url('/admin/applications') ?>" 
-                    class="flex items-center gap-3 rounded-xl px-3 py-3 transition duration-200 <?= strpos($currentUri, 'applications') !== false ? 'bg-white text-[#4f2782] shadow-md' : 'hover:bg-white hover:shadow-md hover:text-[#4f2782]' ?>"
-                >
-                    <i class="bi bi-bookmark flex-shrink-0 text-lg"></i>
-                    <span class="truncate">My Applications</span>
+                    <span class="truncate">Apply for Scholarship</span>
                 </a>
             </nav>
 

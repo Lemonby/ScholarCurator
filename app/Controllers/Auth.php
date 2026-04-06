@@ -20,7 +20,7 @@ class Auth extends BaseController
 				'name' => 'Demo Admin',
 				'role' => 'admin',
 				'dashboard' => '/admin/dashboard',
-			],
+			],	
 			[
 				'email' => 'mahasiswa@scholarcurator.id',
 				'password' => 'password123',
@@ -38,8 +38,8 @@ class Auth extends BaseController
 		if (! $this->validate($rules)) {
 			return redirect()->to('/login#login')
 				->withInput()
-				->with('active_tab', 'login')
-				->with('login_errors', $this->validator->getErrors());
+				->with('activeTab', 'login')
+				->with('loginErrors', $this->validator->getErrors());
 		}
 
 		$email = (string) $this->request->getPost('email');
@@ -56,8 +56,8 @@ class Auth extends BaseController
 		if ($matchedAccount === null) {
 			return redirect()->to('/login#login')
 				->withInput()
-				->with('active_tab', 'login')
-				->with('login_errors', ['Email atau password dummy tidak sesuai.']);
+				->with('activeTab', 'login')
+				->with('loginErrors', ['Email atau password dummy tidak sesuai.']);
 		}
 
 		session()->set([
@@ -67,8 +67,18 @@ class Auth extends BaseController
 			'user_role' => $matchedAccount['role'],
 		]);
 
-		return redirect()->to($matchedAccount['DashboardAdmin'] ?? '/dashboard-admin')
-			->with('message', 'Login berhasil. Selamat datang, ' . $matchedAccount['name'] . '.');
+		if(! session('is_logged_in') || ! in_array(session('user_role'), ['admin', 'mahasiswa'])) {
+			return redirect()->to('/login')
+				->with('message', 'Login berhasil, tetapi peran pengguna tidak dikenali.');
+		}
+
+		if (session('user_role') === 'admin') {
+			return redirect()->to('/admin/dashboard')
+				->with('message', 'Login berhasil. Selamat datang, ' . $matchedAccount['name'] . '.');
+		} elseif (session('user_role') === 'mahasiswa') {
+			return redirect()->to('/mahasiswa/dashboard')
+				->with('message', 'Login berhasil. Selamat datang, ' . $matchedAccount['name'] . '.');
+		}
 	}
 
 	public function register(): RedirectResponse
@@ -83,13 +93,13 @@ class Auth extends BaseController
 		if (! $this->validate($rules)) {
 			return redirect()->to('/login#register')
 				->withInput()
-				->with('active_tab', 'register')
+				->with('activeTab', 'register')
 				->with('register_errors', $this->validator->getErrors());
 		}
 
 		// Placeholder until actual user persistence is implemented.
 		return redirect()->to('/login#login')
-			->with('active_tab', 'login')
+			->with('activeTab', 'login')
 			->with('message', 'Registrasi berhasil divalidasi. Integrasi penyimpanan user belum diaktifkan.');
 	}
 

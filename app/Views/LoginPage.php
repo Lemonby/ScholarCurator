@@ -7,9 +7,9 @@
 </head>
 <body class="min-h-screen bg-[radial-gradient(circle_at_20%_20%,#fff9ff_0%,#f7f1fb_38%,#f2ebf8_100%)] px-4 py-6 text-[#2b1f3b] md:px-6">
 <?php
-	$activeTab = session('active_tab') ?: 'register';
+	$activeTab = session('activeTab') ?: 'register';
 	$message = session('message');
-	$loginErrors = session('login_errors') ?? [];
+	$loginErrors = session('loginErrors') ?? [];
 	$registerErrors = session('register_errors') ?? [];
 ?>
 <main class="mx-auto grid w-full max-w-6xl overflow-hidden rounded-2xl border border-[#f0e6f8] bg-white shadow-[0_20px_50px_rgba(74,28,125,0.12)] lg:grid-cols-2">
@@ -62,20 +62,20 @@
 
 			<div class="mt-4 grid gap-3 sm:grid-cols-2">
 				<div>
-					<label for="full_name" class="mb-1.5 block text-[11px] font-bold uppercase tracking-[0.08em] text-[#7c728d]">Full Name</label>
-					<input id="full_name" name="full_name" type="text" value="<?= esc(old('full_name')) ?>" class="w-full rounded-xl border border-[#ece1f4] bg-[#faf7fd] px-3.5 py-2.5 text-sm text-[#2b1f3b] outline-none ring-0 transition focus:border-[#bf9be7] focus:bg-white" required>
+					<label for="fullName" class="mb-1.5 block text-[11px] font-bold uppercase tracking-[0.08em] text-[#7c728d]">Full Name</label>
+					<input id="fullName" name="fullName" type="text" value="<?= esc(old('fullName')) ?>" class="w-full rounded-xl border border-[#ece1f4] bg-[#faf7fd] px-3.5 py-2.5 text-sm text-[#2b1f3b] outline-none ring-0 transition focus:border-[#bf9be7] focus:bg-white" required>
 				</div>
 				<div>
-					<label for="university" class="mb-1.5 block text-[11px] font-bold uppercase tracking-[0.08em] text-[#7c728d]">University</label>
-					<input id="university" name="university" type="text" value="<?= esc(old('university')) ?>" class="w-full rounded-xl border border-[#ece1f4] bg-[#faf7fd] px-3.5 py-2.5 text-sm text-[#2b1f3b] outline-none ring-0 transition focus:border-[#bf9be7] focus:bg-white" required>
+					<label for="jurusan" class="mb-1.5 block text-[11px] font-bold uppercase tracking-[0.08em] text-[#7c728d]">Major</label>
+					<input id="jurusan" name="jurusan" type="text" value="<?= esc(old('jurusan')) ?>" class="w-full rounded-xl border border-[#ece1f4] bg-[#faf7fd] px-3.5 py-2.5 text-sm text-[#2b1f3b] outline-none ring-0 transition focus:border-[#bf9be7] focus:bg-white" required>
 				</div>
 			</div>
 
-			<label for="register_email" class="mb-1.5 mt-3 block text-[11px] font-bold uppercase tracking-[0.08em] text-[#7c728d]">Email Address</label>
-			<input id="register_email" name="email" type="email" value="<?= esc(old('email')) ?>" class="w-full rounded-xl border border-[#ece1f4] bg-[#faf7fd] px-3.5 py-2.5 text-sm text-[#2b1f3b] outline-none ring-0 transition focus:border-[#bf9be7] focus:bg-white" required>
+			<label for="registerEmail" class="mb-1.5 mt-3 block text-[11px] font-bold uppercase tracking-[0.08em] text-[#7c728d]">Email Address</label>
+			<input id="registerEmail" name="email" type="email" value="<?= esc(old('email')) ?>" class="w-full rounded-xl border border-[#ece1f4] bg-[#faf7fd] px-3.5 py-2.5 text-sm text-[#2b1f3b] outline-none ring-0 transition focus:border-[#bf9be7] focus:bg-white" required>
 
-			<label for="register_password" class="mb-1.5 mt-3 block text-[11px] font-bold uppercase tracking-[0.08em] text-[#7c728d]">Password</label>
-			<input id="register_password" name="password" type="password" class="w-full rounded-xl border border-[#ece1f4] bg-[#faf7fd] px-3.5 py-2.5 text-sm text-[#2b1f3b] outline-none ring-0 transition focus:border-[#bf9be7] focus:bg-white" required>
+			<label for="registerPassword" class="mb-1.5 mt-3 block text-[11px] font-bold uppercase tracking-[0.08em] text-[#7c728d]">Password</label>
+			<input id="registerPassword" name="password" type="password" class="w-full rounded-xl border border-[#ece1f4] bg-[#faf7fd] px-3.5 py-2.5 text-sm text-[#2b1f3b] outline-none ring-0 transition focus:border-[#bf9be7] focus:bg-white" required>
 
 			<button class="mt-5 w-full rounded-xl bg-linear-to-r from-[#5f249f] to-[#6f2fb8] px-4 py-3 text-sm font-bold text-white shadow-[0_10px_22px_rgba(95,36,159,0.25)] transition hover:-translate-y-0.5" type="submit">Create My Profile</button>
 		</form>
@@ -93,11 +93,11 @@
 				</div>
 			<?php endif; ?>
 
-			<label for="login_email" class="mb-1.5 mt-4 block text-[11px] font-bold uppercase tracking-[0.08em] text-[#7c728d]">Email Address</label>
-			<input id="login_email" name="email" type="email" value="<?= esc(old('email')) ?>" class="w-full rounded-xl border border-[#ece1f4] bg-[#faf7fd] px-3.5 py-2.5 text-sm text-[#2b1f3b] outline-none ring-0 transition focus:border-[#bf9be7] focus:bg-white" required>
+			<label for="loginEmail" class="mb-1.5 mt-4 block text-[11px] font-bold uppercase tracking-[0.08em] text-[#7c728d]">Email Address</label>
+			<input id="loginEmail" name="email" type="email" value="<?= esc(old('email')) ?>" class="w-full rounded-xl border border-[#ece1f4] bg-[#faf7fd] px-3.5 py-2.5 text-sm text-[#2b1f3b] outline-none ring-0 transition focus:border-[#bf9be7] focus:bg-white" required>
 
-			<label for="login_password" class="mb-1.5 mt-3 block text-[11px] font-bold uppercase tracking-[0.08em] text-[#7c728d]">Password</label>
-			<input id="login_password" name="password" type="password" class="w-full rounded-xl border border-[#ece1f4] bg-[#faf7fd] px-3.5 py-2.5 text-sm text-[#2b1f3b] outline-none ring-0 transition focus:border-[#bf9be7] focus:bg-white" required>
+			<label for="loginPassword" class="mb-1.5 mt-3 block text-[11px] font-bold uppercase tracking-[0.08em] text-[#7c728d]">Password</label>
+			<input id="loginPassword" name="password" type="password" class="w-full rounded-xl border border-[#ece1f4] bg-[#faf7fd] px-3.5 py-2.5 text-sm text-[#2b1f3b] outline-none ring-0 transition focus:border-[#bf9be7] focus:bg-white" required>
 
 			<button class="mt-5 w-full rounded-xl bg-linear-to-r from-[#5f249f] to-[#6f2fb8] px-4 py-3 text-sm font-bold text-white shadow-[0_10px_22px_rgba(95,36,159,0.25)] transition hover:-translate-y-0.5" type="submit">Login</button>
 		</form>

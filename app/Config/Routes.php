@@ -11,6 +11,20 @@ $routes->get('login', 'Auth::login');
 $routes->post('login', 'Auth::authenticate');
 $routes->post('register', 'Auth::register');
 $routes->get('logout', 'Auth::logout');
-$routes->get('dashboard-admin', 'Dashboard::admin');
-$routes->get('mahasiswa/dashboard', 'Dashboard::mahasiswa');
 
+// route group buat admin
+$routes->group('admin', function($routes) {
+    $routes->get('dashboard', 'Dashboard::admin');
+    $routes->get('admissions', 'Admissions::index');
+    $routes->get('applications', 'ApplicationsAdmin::index');
+    $routes->get('messages', 'Messages::index');
+    $routes->get('pengaturan', 'Settings::index');
+});
+
+// route group buat mahasiswa
+$routes->group('mahasiswa', function($routes) {
+    $routes->get('dashboard', 'Dashboard::mahasiswa');
+    $routes->get('apply', 'ApplicationsMahasiswa::apply');
+    $routes->post('apply', 'ApplicationsMahasiswa::submitApplication');
+    $routes->get('status', 'ApplicationsMahasiswa::status'); // halaman ini bakal dipake tapi nanti
+});

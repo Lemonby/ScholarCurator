@@ -22,7 +22,7 @@ class Dashboard extends BaseController
 			return redirect()->to('/login');
 		}
 
-		return view('mahasiswa/dashboard', [
+		return view('DashboardMahasiswa', [
 			'userName' => session('user_name') ?? 'Mahasiswa',
 			'userEmail' => session('user_email') ?? 'mahasiswa@scholarcurator.id',
 		]);
