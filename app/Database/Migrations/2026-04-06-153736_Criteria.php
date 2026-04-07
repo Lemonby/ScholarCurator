@@ -24,6 +24,11 @@ class Kriteria extends Migration
                 'type'       => 'DECIMAL',
                 'constraint' => [3, 2],
             ],
+            'criteriaType' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 50,
+                'default'    => 'benefit',
+            ],
         ]);
         $this->forge->addKey('idCriteria', true);
         $this->forge->createTable('criteria');

@@ -19,15 +19,33 @@
 				<!-- Circle Progress -->
 				<div class="flex justify-center mb-8">
 					<div class="relative w-32 h-32">
+						<?php
+							$benefitPercent = (int)($criteriaBenefits * 100);
+							$costPercent = (int)($criteriaCosts * 100);
+							$totalPercent = $benefitPercent + $costPercent;
+							$circumference = 339.3;
+							
+							// Calculate offsets untuk donut chart
+							$benefitLength = ($benefitPercent / 100) * $circumference;
+							$costLength = ($costPercent / 100) * $circumference;
+							$benefitOffset = $circumference - $benefitLength;
+							$costOffset = $circumference - $benefitLength - $costLength;
+						?>
 						<svg class="w-full h-full transform -rotate-90" viewBox="0 0 120 120">
 							<!-- Background circle -->
 							<circle cx="60" cy="60" r="54" fill="none" stroke="#e9d5ff" stroke-width="8"/>
-							<!-- Progress circle -->
-							<circle cx="60" cy="60" r="54" fill="none" stroke="#6b3a9d" stroke-width="8" stroke-dasharray="339.3" stroke-dashoffset="0" stroke-linecap="round"/>
+							<!-- Benefit Progress circle -->
+							<circle cx="60" cy="60" r="54" fill="none" stroke="#6b3a9d" stroke-width="8" 
+								stroke-dasharray="<?= $benefitLength ?> <?= $circumference - $benefitLength ?>" 
+								stroke-dashoffset="0" stroke-linecap="round"/>
+							<!-- Cost Progress circle -->
+							<circle cx="60" cy="60" r="54" fill="none" stroke="#a78bfa" stroke-width="8" 
+								stroke-dasharray="<?= $costLength ?> <?= $circumference - $costLength ?>" 
+								stroke-dashoffset="-<?= $benefitLength ?>" stroke-linecap="round"/>
 						</svg>
 						<div class="absolute inset-0 flex flex-col items-center justify-center">
-							<p class="text-3xl font-bold text-[#6b3a9d]"><?= (int)(($criteriaBenefits + $criteriaCosts) * 100) ?>%</p>
-							<p class="text-xs font-semibold text-gray-600 uppercase">Balanced</p>
+							<p class="text-3xl font-bold text-[#6b3a9d]"><?= $totalPercent ?>%</p>
+							<p class="text-xs font-semibold text-gray-600 uppercase">Total</p>
 						</div>
 					</div>
 				</div>
@@ -36,16 +54,16 @@
 				<div class="space-y-4">
 					<div>
 						<p class="text-xs text-gray-500 uppercase tracking-wide mb-1">Benefit Weight</p>
-						<p class="text-2xl font-bold text-[#6b3a9d]"><?= (int)($criteriaBenefits * 100) ?>%</p>
+						<p class="text-2xl font-bold text-[#6b3a9d]"><?= $benefitPercent ?>%</p>
 						<div class="mt-2 h-2 bg-gray-200 rounded-full overflow-hidden">
-							<div class="h-full bg-[#c084fc]" style="width: 65%;"></div>
+							<div class="h-full bg-[#6b3a9d]" style="width: <?= $benefitPercent ?>% !important;"></div>
 						</div>
 					</div>
 					<div>
 						<p class="text-xs text-gray-500 uppercase tracking-wide mb-1">Cost Weight</p>
-						<p class="text-2xl font-bold text-[#6b3a9d]"><?= (int)($criteriaCosts * 100) ?>%</p>
+						<p class="text-2xl font-bold text-[#6b3a9d]"><?= $costPercent ?>%</p>
 						<div class="mt-2 h-2 bg-gray-200 rounded-full overflow-hidden">
-							<div class="h-full bg-[#c084fc]" style="width: 35%;"></div>
+							<div class="h-full bg-[#a78bfa]" style="width: <?= $costPercent ?>% !important;"></div>
 						</div>
 					</div>
 				</div>
@@ -53,8 +71,16 @@
 				<!-- Info Box -->
 				<div class="mt-6 p-4 bg-white/50 rounded-lg border border-[#6b3a9d]/20">
 					<div class="flex gap-2">
-						<i class="bi bi-geo-alt flex-shrink-0 text-[#6b3a9d] mt-0.5"></i>
-						<p class="text-xs text-gray-700 leading-relaxed">Ensuring balanced weights helps eliminate bias and increase fairness across applicant pools.</p>
+						<i class="bi bi-info-circle flex-shrink-0 text-[#6b3a9d] mt-0.5"></i>
+						<p class="text-xs text-gray-700 leading-relaxed">
+							<?php 
+								if ($benefitPercent + $costPercent == 100) {
+									echo "✅ Perfectly balanced weights! Ready for evaluation.";
+								} else {
+									echo "⚠️ Total allocation is " . ($benefitPercent + $costPercent) . "%. Aim for 100% for optimal configuration.";
+								}
+							?>
+						</p>
 					</div>
 				</div>
 			</div>
@@ -106,7 +132,7 @@
 			</div>
 
 			<!-- Parent Income -->
-			<div class="bg-white rounded-xl p-5 border border-gray-200 hover:border-[#6b3a9d] transition">
+			<div class="bg-white rounded-xl p-5 border border-gray-200 hover:border-[#6b3a9d] transition duration-200">
 				<div class="flex items-start gap-4">
 					<div class="p-3 bg-red-500/10 rounded-lg flex-shrink-0">
 						<i class="bi bi-file-text text-red-500 text-xl"></i>

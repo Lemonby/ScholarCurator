@@ -72,21 +72,25 @@ class MasterSeeder extends Seeder
                 'idCriteria' => 1,
                 'criteriaName' => 'IPK (GPA)',
                 'criteriaWeight' => 0.40,
+                'criteriaType' => 'benefit',
             ],
             [
                 'idCriteria' => 2,
                 'criteriaName' => 'TOEFL Score',
                 'criteriaWeight' => 0.30,
+                'criteriaType' => 'benefit',
             ],
             [
                 'idCriteria' => 3,
                 'criteriaName' => 'Sertifikat Penghargaan',
                 'criteriaWeight' => 0.20,
+                'criteriaType' => 'benefit',
             ],
             [
                 'idCriteria' => 4,
                 'criteriaName' => 'Pengalaman Organisasi',
                 'criteriaWeight' => 0.10,
+                'criteriaType' => 'benefit',
             ],
         ];
         $this->db->table('criteria')->insertBatch($criteria);

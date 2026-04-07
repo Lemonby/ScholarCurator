@@ -7,53 +7,54 @@
 ?>
 
 <div class="p-8 space-y-8">
-	<!-- Application Status & Active Criteria -->
-	<div class="grid grid-cols-3 gap-6">
-		<!-- Application Status -->
-		<div class="bg-gradient-to-br from-[#f3e8ff] to-[#e9d5ff] rounded-2xl p-6 shadow-sm border border-purple-200">
-			<h3 class="text-lg font-bold text-gray-900 mb-6">Summary Aplication</h3>
-			<div class="space-y-4">
-				<div class="flex items-center justify-between">
-					<div class="flex items-center gap-2">
-						<span class="w-3 h-3 bg-[#6b3a9d] rounded-full"></span>
-						<span class="text-sm font-medium text-gray-700">Total User</span>
-					</div>
-					<span class="text-lg font-bold text-gray-900"> <?= $mahasiswaCount ?></span>
-				</div>
-				<div class="flex items-center justify-between">
-					<div class="flex items-center gap-2">
-						<span class="w-3 h-3 bg-[#6b3a9d] rounded-full"></span>
-						<span class="text-sm font-medium text-gray-700">Pass</span>
-					</div>
-					<span class="text-lg font-bold text-gray-900"> <?= $mahasiswaPassCount ?></span>
-				</div>
-				<div class="flex items-center justify-between">
-					<div class="flex items-center gap-2">
-						<span class="w-3 h-3 bg-[#6b3a9d] rounded-full"></span>
-						<span class="text-sm font-medium text-gray-700">did not qualify</span>
-					</div>
-					<span class="text-lg font-bold text-gray-900"> <?= $mahasiswaFailCount ?></span>
-				</div>
-			</div>
-			<button class="mt-6 w-full flex items-center justify-between px-4 py-2 text-[#6b3a9d] font-semibold hover:bg-white/50 rounded-lg transition">
-				REVIEW QUEUE
-				<i class="bi bi-chevron-right"></i>
-			</button>
+	<!-- Welcome Header with Quick Stats -->
+	<div class="bg-gradient-to-r from-[#6b3a9d] to-[#4f2782] rounded-2xl p-8 text-white shadow-lg">
+		<div class="mb-6">
+			<h2 class="text-3xl font-bold mb-2">Welcome back, <?= $userName ?> 👋</h2>
+			<p class="text-purple-100">Here's your scholarship selection summary</p>
 		</div>
 
+		<!-- Quick Stats Row -->
+		<div class="grid grid-cols-4 gap-4">
+			<div class="bg-white/10 backdrop-blur rounded-xl p-4 border border-white/20">
+				<p class="text-sm text-white/70 mb-1">Total Applications</p>
+				<p class="text-3xl font-bold text-white"><?= $mahasiswaCount ?></p>
+			</div>
+			<div class="bg-green-500/20 backdrop-blur rounded-xl p-4 border border-green-400/30">
+				<p class="text-sm text-green-100 mb-1">Selected</p>
+				<p class="text-3xl font-bold text-green-300"><?= $mahasiswaPassCount ?></p>
+			</div>
+			<div class="bg-red-500/20 backdrop-blur rounded-xl p-4 border border-red-400/30">
+				<p class="text-sm text-red-100 mb-1">Not Selected</p>
+				<p class="text-3xl font-bold text-red-300"><?= $mahasiswaFailCount ?></p>
+			</div>
+			<div class="bg-blue-500/20 backdrop-blur rounded-xl p-4 border border-blue-400/30">
+				<p class="text-sm text-blue-100 mb-1">Selection Rate</p>
+				<p class="text-3xl font-bold text-blue-300"><?php echo $mahasiswaCount > 0 ? round(($mahasiswaPassCount / $mahasiswaCount) * 100, 1) : 0; ?>%</p>
+			</div>
+		</div>
+	</div>
+
+	<!-- Application Status & Active Criteria -->
+	<div class="grid grid-cols-2 gap-6">
 		<!-- Active Scholarship Programs -->
-		<div class="col-span-2 bg-white rounded-2xl p-6 shadow-sm overflow-y-auto">
+		<div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
 			<div class="flex items-center justify-between mb-6">
-				<h3 class="text-lg font-bold text-gray-900">Student That Pass</h3>
-				<a href="#" class="text-[#6b3a9d] font-semibold text-sm hover:underline">View All Programs</a>
+				<h3 class="text-lg font-bold text-gray-900">Top Selections</h3>
+				<a href="/admin/admissions" class="text-[#6b3a9d] font-semibold text-sm hover:underline">View All</a>
 			</div>
 			<div class="space-y-4">
 				<!-- Program 1 -->
-				<?php foreach ($mahasiswaPass as $mahasiswa): ?>
-					<div class="flex items-center justify-between p-4 border border-gray-200 rounded-xl hover:border-[#6b3a9d] transition">
+				<?php 
+					$count = 0;
+					foreach ($mahasiswaPass as $mahasiswa): 
+						if ($count >= 3) break;
+						$count++;
+				?>
+					<div class="flex items-center justify-between p-4 border border-gray-200 rounded-xl hover:border-[#6b3a9d] transition hover:shadow-md">
 						<div class="flex items-center gap-4">
-							<div class="w-12 h-12 rounded-full bg-gradient-to-br from-[#6b3a9d] to-[#4f2782] flex items-center justify-center text-white">
-								<i class="bi bi-globe"></i>
+							<div class="w-12 h-12 rounded-full bg-gradient-to-br from-[#6b3a9d] to-[#4f2782] flex items-center justify-center text-white font-bold">
+								<?= $count ?>
 							</div>
 							<div>
 								<h4 class="font-semibold text-gray-900"><?= $mahasiswa['name'] ?></h4>
@@ -61,19 +62,81 @@
 							</div>
 						</div>
 						<div class="text-right">
-							<p class="font-bold text-green-500"><?= $mahasiswa['finalScore'] ?></p>
-							<span class="text-xs bg-green-500/10 text-green-500 px-2 py-1 rounded font-semibold">PASSED</span>
+							<p class="font-bold text-green-600"><?= $mahasiswa['finalScore'] ?></p>
+							<span class="text-xs bg-green-500/10 text-green-600 px-2 py-1 rounded-full font-semibold">SELECTED</span>
 						</div>
 					</div>
 				<?php endforeach; ?>
 			</div>
 		</div>
+
+		<!-- Quick Performance Insights -->
+		<div class="bg-gradient-to-br from-[#6b3a9d] to-[#4f2782] rounded-2xl p-6 text-white shadow-lg border border-purple-400/20">
+			<h3 class="text-lg font-bold mb-6">Selection Insights</h3>
+			
+			<!-- Stats Grid -->
+			<div class="space-y-3">
+				<!-- Top Score -->
+				<div class="bg-white/10 backdrop-blur rounded-xl p-3 border border-white/20">
+					<p class="text-xs text-white/70 mb-1">Highest Score</p>
+					<p class="text-2xl font-bold text-yellow-300">
+						<?php 
+							$topScore = 0;
+							foreach ($mahasiswaPass as $mhs) {
+								if (!empty($mhs['finalScore']) && $mhs['finalScore'] > $topScore) {
+									$topScore = $mhs['finalScore'];
+								}
+							}
+							echo $topScore > 0 ? $topScore : 'N/A';
+						?>
+					</p>
+				</div>
+
+				<!-- Cutoff Score -->
+				<div class="bg-white/10 backdrop-blur rounded-xl p-3 border border-white/20">
+					<p class="text-xs text-white/70 mb-1">Cutoff Score</p>
+					<p class="text-2xl font-bold text-orange-300">
+						<?php 
+							$minScore = PHP_FLOAT_MAX;
+							foreach ($mahasiswaPass as $mhs) {
+								if (!empty($mhs['finalScore']) && $mhs['finalScore'] < $minScore) {
+									$minScore = $mhs['finalScore'];
+								}
+							}
+							echo $minScore < PHP_FLOAT_MAX ? $minScore : 'N/A';
+						?>
+					</p>
+				</div>
+
+				<!-- Selection Summary -->
+				<div class="bg-gradient-to-r from-green-500/20 to-blue-500/20 backdrop-blur rounded-xl p-3 border border-white/20">
+					<p class="text-xs text-white/70 mb-2">Selection Summary</p>
+					<div class="flex items-end gap-2">
+						<div>
+							<p class="text-sm text-white/60">Selected</p>
+							<p class="text-xl font-bold text-green-300"><?= $mahasiswaPassCount ?></p>
+						</div>
+						<span class="text-white/50 mb-1">of</span>
+						<div>
+							<p class="text-sm text-white/60">Total</p>
+							<p class="text-xl font-bold text-blue-300"><?= $mahasiswaCount ?></p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Action Buttons -->
+			<div class="mt-6 space-y-2">
+				<a href="/admin/admissions" class="w-full flex items-center justify-between px-4 py-2.5 bg-white text-[#6b3a9d] font-semibold rounded-lg hover:bg-gray-100 transition">
+					See Full Rankings
+					<i class="bi bi-arrow-right"></i>
+				</a>
+			</div>
+		</div>
 	</div>
 
 	<!-- Active Criteria -->
-	<div class="grid grid-cols-3 gap-6">
-		<!-- list Active Criteria -->
-		<div class="col-span-2 bg-white rounded-2xl p-6 shadow-sm">
+	<div class="grid grid-cols-1 gap-6">
 			<div class="flex items-center justify-between mb-6">
 				<h3 class="text-lg font-bold text-gray-900">Active Criteria</h3>
 				<a href="#" class="text-[#6b3a9d] font-semibold text-sm hover:underline">Go to Inbox</a>
@@ -112,15 +175,6 @@
 					</div>
 				<?php endforeach; ?>
 			</div>
-		</div>
-
-		<!-- Scale Your Impact -->
-		<div class="bg-gradient-to-br from-[#6b3a9d] to-[#4f2782] rounded-2xl p-6 text-white shadow-lg">
-			<h3 class="text-lg font-bold mb-2">Scale your impact with Analytics</h3>
-			<p class="text-sm opacity-75 mb-6">Export detailed demographic reports to better understand your applicant pool reach.</p>
-			<button class="w-full bg-white text-[#6b3a9d] font-bold py-2 rounded-lg hover:bg-gray-100 transition">
-				Generate Report
-			</button>
 		</div>
 	</div>
 	</div>

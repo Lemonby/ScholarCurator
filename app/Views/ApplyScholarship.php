@@ -71,11 +71,11 @@
 					<div class="grid grid-cols-2 gap-6">
 						<div>
 							<label class="block text-xs uppercase tracking-wide font-bold text-gray-700 mb-3">GPA</label>
-							<input type="number" step="0.01" placeholder="e.g. 3.8" class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 focus:bg-white focus:border-[#6b3a9d] focus:ring-2 focus:ring-[#6b3a9d]/20 outline-none transition" required>
+							<input name="GPA" type="number" step="0.01" placeholder="e.g. 3.8" class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 focus:bg-white focus:border-[#6b3a9d] focus:ring-2 focus:ring-[#6b3a9d]/20 outline-none transition" required>
 						</div>
 						<div>
 							<label class="block text-xs uppercase tracking-wide font-bold text-gray-700 mb-3">Parent Income</label>
-							<input type="number" step="0.01" placeholder="e.g. 50000" class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 focus:bg-white focus:border-[#6b3a9d] focus:ring-2 focus:ring-[#6b3a9d]/20 outline-none transition" required>
+							<input name="ParentIncome" type="number" step="0.01" placeholder="e.g. 50000" class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 focus:bg-white focus:border-[#6b3a9d] focus:ring-2 focus:ring-[#6b3a9d]/20 outline-none transition" required>
 						</div>
 					</div>
 
@@ -83,11 +83,11 @@
 					<div class="grid grid-cols-2 gap-6">
 						<div>
 							<label class="block text-xs uppercase tracking-wide font-bold text-gray-700 mb-3">Number of Dependents</label>
-							<input type="number" placeholder="e.g. 2" class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 focus:bg-white focus:border-[#6b3a9d] focus:ring-2 focus:ring-[#6b3a9d]/20 outline-none transition" required>
+							<input name="NumberOfDependents" type="number" placeholder="e.g. 2" class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 focus:bg-white focus:border-[#6b3a9d] focus:ring-2 focus:ring-[#6b3a9d]/20 outline-none transition" required>
 						</div>
 						<div>
 							<label class="block text-xs uppercase tracking-wide font-bold text-gray-700 mb-3">Non-Academic Achievements</label>
-							<input type="text" placeholder="e.g. Leadership roles, volunteer work" class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 focus:bg-white focus:border-[#6b3a9d] focus:ring-2 focus:ring-[#6b3a9d]/20 outline-none transition" required>
+							<input name="NonAcademicAchievements" type="text" placeholder="e.g. Leadership roles, volunteer work" class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 focus:bg-white focus:border-[#6b3a9d] focus:ring-2 focus:ring-[#6b3a9d]/20 outline-none transition" required>
 						</div>
 					</div>
 

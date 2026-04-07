@@ -6,8 +6,8 @@ use CodeIgniter\Model;
 class CriteriaModel extends Model
 {
     protected $table = 'criteria';
-    protected $primaryKey = 'id';
-    protected $allowedFields = ['CriteriaName', 'criteriaWeight', 'criteriaType'];
+    protected $primaryKey = 'idCriteria';
+    protected $allowedFields = ['criteriaName', 'criteriaWeight', 'criteriaType'];
 
     public function getAllCriteria()
     {
@@ -16,7 +16,7 @@ class CriteriaModel extends Model
 
     public function sumCriteriaBenefits()
     {
-        return (float) ($this->db->table($this->table)
+        return (float) ($this->db->table('criteria c')
             ->selectSum('criteriaWeight')
             ->where('criteriaType', 'benefit')
             ->get()
@@ -26,7 +26,7 @@ class CriteriaModel extends Model
 
     public function sumCriteriaCosts()
     {
-        return (float) ($this->db->table($this->table)
+        return (float) ($this->db->table('criteria c')
             ->selectSum('criteriaWeight')
             ->where('criteriaType', 'cost')
             ->get()
