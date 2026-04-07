@@ -4,15 +4,30 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 
 Class Admissions extends BaseController{
+    private $admissionsModel;
+
+    public function __construct()
+    {
+        $this->admissionsModel = new \App\Models\AdmissionModel();
+    }
     public function index()
     {
-        if (! session('is_logged_in') || session('user_role') !== 'admin') {
+        if (! session('isLoggedIn') || session('userRole') !== 'admin') {
             return redirect()->to('/login');
         }
 
+        $dataMahasiswa = $this->admissionsModel->getAllMahasiswa();
+        $mahasiswaCount = $this->admissionsModel->countAllMahasiswa();
+        $mahasiswaPassCount = $this->admissionsModel->countMahasiswaPass();
+        $mahasiswaFailCount = $this->admissionsModel->countMahasiswaFail();
+
         return view('AdmissionsAdmin', [
-            'userName' => session('user_name') ?? 'Admin',
-            'userEmail' => session('user_email') ?? 'admin@example.com'
+            'userName' => session('userName') ?? 'Admin',
+            'userEmail' => session('userEmail') ?? 'admin@example.com',
+            'mahasiswaList' => $dataMahasiswa,
+            'mahasiswaCount' => $mahasiswaCount,
+            'mahasiswaPassCount' => $mahasiswaPassCount,
+            'mahasiswaFailCount' => $mahasiswaFailCount
         ]);
     }
 }

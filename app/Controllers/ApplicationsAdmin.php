@@ -4,15 +4,22 @@ namespace App\Controllers;
 use CodeIgniter\HTTP\RedirectResponse;
 
 class ApplicationsAdmin extends BaseController{
+    private $criteriaModel;
+    public function __construct()
+    {
+        $this->criteriaModel = new \App\Models\CriteriaModel();
+    }
     public function index()
     {
-        if (! session('is_logged_in') || session('user_role') !== 'admin') {
+        if (! session('isLoggedIn') || session('userRole') !== 'admin') {
             return redirect()->to('/login');
         }
 
         return view('ApplicationAdmin', [
-            'userName' => session('user_name') ?? 'Admin',
-            'userEmail' => session('user_email') ?? 'demo@scholarcurator.id'
+            'userName' => session('userName') ?? 'Admin',
+            'userEmail' => session('userEmail') ?? 'demo@scholarcurator.id',
+            'criteriaBenefits' => $this->criteriaModel->sumCriteriaBenefits(),
+            'criteriaCosts' => $this->criteriaModel->sumCriteriaCosts()
         ]);
     }
 }

@@ -26,7 +26,7 @@
 							<circle cx="60" cy="60" r="54" fill="none" stroke="#6b3a9d" stroke-width="8" stroke-dasharray="339.3" stroke-dashoffset="0" stroke-linecap="round"/>
 						</svg>
 						<div class="absolute inset-0 flex flex-col items-center justify-center">
-							<p class="text-3xl font-bold text-[#6b3a9d]">100%</p>
+							<p class="text-3xl font-bold text-[#6b3a9d]"><?= (int)(($criteriaBenefits + $criteriaCosts) * 100) ?>%</p>
 							<p class="text-xs font-semibold text-gray-600 uppercase">Balanced</p>
 						</div>
 					</div>
@@ -36,14 +36,14 @@
 				<div class="space-y-4">
 					<div>
 						<p class="text-xs text-gray-500 uppercase tracking-wide mb-1">Benefit Weight</p>
-						<p class="text-2xl font-bold text-[#6b3a9d]">65%</p>
+						<p class="text-2xl font-bold text-[#6b3a9d]"><?= (int)($criteriaBenefits * 100) ?>%</p>
 						<div class="mt-2 h-2 bg-gray-200 rounded-full overflow-hidden">
 							<div class="h-full bg-[#c084fc]" style="width: 65%;"></div>
 						</div>
 					</div>
 					<div>
 						<p class="text-xs text-gray-500 uppercase tracking-wide mb-1">Cost Weight</p>
-						<p class="text-2xl font-bold text-[#6b3a9d]">35%</p>
+						<p class="text-2xl font-bold text-[#6b3a9d]"><?= (int)($criteriaCosts * 100) ?>%</p>
 						<div class="mt-2 h-2 bg-gray-200 rounded-full overflow-hidden">
 							<div class="h-full bg-[#c084fc]" style="width: 35%;"></div>
 						</div>

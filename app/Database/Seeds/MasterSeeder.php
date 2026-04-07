@@ -8,6 +8,14 @@ class MasterSeeder extends Seeder
 {
     public function run()
     {
+        $this->db->disableForeignKeyChecks();
+        $this->db->table('result')->truncate();
+        $this->db->table('assessment')->truncate();
+        $this->db->table('criteria')->truncate();
+        $this->db->table('mahasiswa')->truncate();
+        $this->db->table('users')->truncate();
+        $this->db->enableForeignKeyChecks();
+
         // Insert Users
         $users = [
             [
@@ -164,18 +172,27 @@ class MasterSeeder extends Seeder
         $result = [
             [
                 'idResult' => 1,
-                'NIM' => 1,
+                'NIM' => 2407411079,
                 'finalScore' => 82.35,
+                'status' => 'pass',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 'idResult' => 2,
-                'NIM' => 2,
+                'NIM' => 2407411080,
                 'finalScore' => 87.40,
+                'status' => 'pass',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 'idResult' => 3,
-                'NIM' => 3,
+                'NIM' => 2407411081,
                 'finalScore' => 75.60,
+                'status' => 'fail',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
             ],
         ];
         $this->db->table('result')->insertBatch($result);

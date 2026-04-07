@@ -6,13 +6,13 @@ use CodeIgniter\HTTP\RedirectResponse;
 
 class ApplicationsMahasiswa extends BaseController {
     public function apply() {
-        if (! session('is_logged_in') || session('user_role') !== 'mahasiswa') {
+        if (! session('isLoggedIn') || session('userRole') !== 'mahasiswa') {
             return redirect()->to('/login');
         }
 
         return view('ApplyScholarship', [
-            'userName' => session('user_name') ?? 'Admin',
-            'userEmail' => session('user_email') ?? 'demo@scholarcurator.id'
+            'userName' => session('userName') ?? 'Admin',
+            'userEmail' => session('userEmail') ?? 'demo@scholarcurator.id'
         ]);
     }
 }
