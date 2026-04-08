@@ -43,4 +43,10 @@ class AdmissionModel extends Model
             ->where('r.status', 'fail')
             ->countAllResults();
     }
+
+    // edit mahasiswa data by NIM
+
+
+    // hapus mahasiswa data by NIM
+
 }

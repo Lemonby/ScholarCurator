@@ -33,6 +33,15 @@ class CriteriaModel extends Model
             ->getRow()
             ->criteriaWeight ?? 0);
     }
+
+    public function getAllSubCriteria()
+    {
+        return $this->db->table('subCriteria s')
+            ->select('s.idSub, s.idCriteria, s.subName, s.variableValue, s.comment, c.criteriaName')
+            ->join('criteria c', 'c.idCriteria = s.idCriteria', 'left')
+            ->get()
+            ->getResultArray();
+    }
 }
 
 

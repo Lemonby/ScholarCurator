@@ -49,6 +49,15 @@
                     <i class="bi bi-bookmark flex-shrink-0 text-lg"></i>
                     <span class="truncate">My Applications</span>
                 </a>
+
+                <a 
+                    href="<?= base_url('/admin/criteria-list') ?>" 
+                    class="flex items-center gap-3 rounded-xl px-3 py-3 transition duration-200 <?= strpos($currentUri, 'criteria-list') !== false || strpos($currentUri, 'categories') !== false ? 'bg-white text-[#4f2782] shadow-md' : 'hover:bg-white hover:shadow-md hover:text-[#4f2782]' ?>"
+                >
+                    <i class="bi bi-list flex-shrink-0 text-lg"></i>
+                    <span class="truncate">Criteria List</span>
+                </a>
+
             </nav>
 
             <!-- Bottom Section -->

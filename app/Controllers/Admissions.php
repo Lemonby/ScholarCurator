@@ -32,13 +32,13 @@ Class Admissions extends BaseController{
             // 1. ambil semua kriteria dan bobotnya
             $kriteria = $this->criteriaModel->getAllCriteria();
             if (empty($kriteria)) {
-                $errors['KRITERIA_KOSONG'] = '❌ ERROR: Tidak ada kriteria di database';
+                $errors['KRITERIA_KOSONG'] = 'ERROR: Tidak ada kriteria di database';
             }
 
             // 2. Ambil Data Mahasiswa beserta Skor Assessment-nya
             $mahasiswaData = $this->assessmentModel->getAllAssessments();
             if (empty($mahasiswaData)) {
-                $errors['DATA_MAHASISWA_KOSONG'] = '⚠️ WARNING: Tidak ada data assessment';
+                $errors['DATA_MAHASISWA_KOSONG'] = 'WARNING: Tidak ada data assessment';
             }
 
             // Ubah kriteria jadi key-value array untuk pencarian lebih cepat
@@ -58,10 +58,10 @@ Class Admissions extends BaseController{
                             'min' => min($scores)
                         ];
                     } else {
-                        $errors['SKOR_KOSONG_' . $k['idCriteria']] = "⚠️ WARNING: Kriteria '{$k['criteriaName']}' tidak punya score";
+                        $errors['SKOR_KOSONG_' . $k['idCriteria']] = "WARNING: Kriteria '{$k['criteriaName']}' tidak punya score";
                     }
                 } catch (\Exception $e) {
-                    $errors['ERROR_MINMAX_' . $k['idCriteria']] = "❌ ERROR: MinMax kriteria {$k['idCriteria']}: " . $e->getMessage();
+                    $errors['ERROR_MINMAX_' . $k['idCriteria']] = "ERROR: MinMax kriteria {$k['idCriteria']}: " . $e->getMessage();
                 }
             }
 
@@ -82,7 +82,7 @@ Class Admissions extends BaseController{
                 try {
                     // Skip jika mahasiswa tidak ada di grouping
                     if (!isset($assessmentByNIM[$nim])) {
-                        $errors['NIM_TIDAK_DITEMUKAN_' . $nim] = "⚠️ WARNING: NIM {$nim} tidak memiliki assessment";
+                        $errors['NIM_TIDAK_DITEMUKAN_' . $nim] = "WARNING: NIM {$nim} tidak memiliki assessment";
                         continue;
                     }
 
@@ -96,12 +96,12 @@ Class Admissions extends BaseController{
                         try {
                             // Validasi: cek apakah kriteria ada dan minMax ada
                             if (!isset($kriteriaMap[$idC])) {
-                                $errors['KRITERIA_TIDAK_DITEMUKAN_' . $idC] = "❌ ERROR: Kriteria {$idC} tidak ditemukan untuk NIM {$nim}";
+                                $errors['KRITERIA_TIDAK_DITEMUKAN_' . $idC] = "ERROR: Kriteria {$idC} tidak ditemukan untuk NIM {$nim}";
                                 continue;
                             }
 
                             if (!isset($minMax[$idC])) {
-                                $errors['MINMAX_TIDAK_ADA_' . $idC . '_' . $nim] = "❌ ERROR: MinMax tidak tersedia untuk kriteria {$idC} pada NIM {$nim}";
+                                $errors['MINMAX_TIDAK_ADA_' . $idC . '_' . $nim] = "ERROR: MinMax tidak tersedia untuk kriteria {$idC} pada NIM {$nim}";
                                 continue;
                             }
 
@@ -111,7 +111,7 @@ Class Admissions extends BaseController{
 
                             // Validasi bobot
                             if ($weight <= 0) {
-                                $errors['BOBOT_INVALID_' . $idC] = "⚠️ WARNING: Bobot kriteria {$idC} tidak valid: {$weight}";
+                                $errors['BOBOT_INVALID_' . $idC] = "WARNING: Bobot kriteria {$idC} tidak valid: {$weight}";
                                 continue;
                             }
 
@@ -122,18 +122,18 @@ Class Admissions extends BaseController{
                                 if ($minMax[$idC]['max'] > 0) {
                                     $r_ij = $row['score'] / $minMax[$idC]['max'];
                                 } else {
-                                    $errors['MAX_ZERO_' . $idC] = "⚠️ WARNING: Max score 0 untuk kriteria benefit {$idC}";
+                                    $errors['MAX_ZERO_' . $idC] = "WARNING: Max score 0 untuk kriteria benefit {$idC}";
                                 }
                             } else if ($type == 'cost') { // cost
                                 // Jaga dari division by zero
                                 if ($row['score'] > 0) {
                                     $r_ij = $minMax[$idC]['min'] / $row['score'];
                                 } else {
-                                    $errors['SCORE_ZERO_' . $nim . '_' . $idC] = "❌ ERROR: Score 0 untuk cost criteria {$idC} pada NIM {$nim}";
+                                    $errors['SCORE_ZERO_' . $nim . '_' . $idC] = "ERROR: Score 0 untuk cost criteria {$idC} pada NIM {$nim}";
                                     continue;
                                 }
                             } else {
-                                $errors['TIPE_KRITERIA_INVALID_' . $idC] = "❌ ERROR: Tipe kriteria {$idC} tidak valid: {$type}";
+                                $errors['TIPE_KRITERIA_INVALID_' . $idC] = "ERROR: Tipe kriteria {$idC} tidak valid: {$type}";
                                 continue;
                             }
 
@@ -142,7 +142,7 @@ Class Admissions extends BaseController{
                             $skorCount++;
 
                         } catch (\Exception $e) {
-                            $errors['ERROR_KALKULASI_' . $nim . '_' . $idC] = "❌ ERROR: Kalkulasi SAW NIM {$nim} kriteria {$idC}: " . $e->getMessage();
+                            $errors['ERROR_KALKULASI_' . $nim . '_' . $idC] = "ERROR: Kalkulasi SAW NIM {$nim} kriteria {$idC}: " . $e->getMessage();
                         }
                     }
 
@@ -153,11 +153,11 @@ Class Admissions extends BaseController{
                             'score' => round($totalScore, 4)
                         ];
                     } else {
-                        $errors['SKOR_COUNT_ZERO_' . $nim] = "⚠️ WARNING: NIM {$nim} tidak memiliki skor valid yang dihitung";
+                        $errors['SKOR_COUNT_ZERO_' . $nim] = "WARNING: NIM {$nim} tidak memiliki skor valid yang dihitung";
                     }
 
                 } catch (\Exception $e) {
-                    $errors['ERROR_NIM_' . $nim] = "❌ ERROR: Proses NIM {$nim}: " . $e->getMessage();
+                    $errors['ERROR_NIM_' . $nim] = "ERROR: Proses NIM {$nim}: " . $e->getMessage();
                 }
             }
 
@@ -201,11 +201,11 @@ Class Admissions extends BaseController{
                             $status
                         );
                     } catch (\Exception $e) {
-                        $errors['ERROR_INSERT_RESULT_' . $ranking['NIM']] = "❌ ERROR: Insert ke Result NIM {$ranking['NIM']}: " . $e->getMessage();
+                        $errors['ERROR_INSERT_RESULT_' . $ranking['NIM']] = "ERROR: Insert ke Result NIM {$ranking['NIM']}: " . $e->getMessage();
                     }
                 }
             } catch (\Exception $e) {
-                $errors['ERROR_INSERT_ALL_RESULT'] = "❌ ERROR: Insert semua Result: " . $e->getMessage();
+                $errors['ERROR_INSERT_ALL_RESULT'] = "ERROR: Insert semua Result: " . $e->getMessage();
             }
 
             // Log semua error
@@ -214,7 +214,7 @@ Class Admissions extends BaseController{
             }
 
         } catch (\Exception $e) {
-            $errors['FATAL_ERROR'] = "❌ FATAL ERROR: " . $e->getMessage();
+            $errors['FATAL_ERROR'] = "FATAL ERROR: " . $e->getMessage();
             \log_message('error', 'FATAL ERROR in Admissions::index - ' . $e->getMessage() . ' at ' . $e->getFile() . ':' . $e->getLine());
         }
 
@@ -253,5 +253,86 @@ Class Admissions extends BaseController{
             'itemsPerPage' => $itemsPerPage,
             'startIndex' => $startIndex
         ]);
+    }
+
+    public function update()
+    {
+        // Check if user is logged in and is admin
+        if (!session('isLoggedIn') || session('userRole') !== 'admin') {
+            return $this->response->setJSON([
+                'success' => false,
+                'message' => 'Unauthorized access'
+            ])->setStatusCode(401);
+        }
+
+        $request = $this->request->getJSON();
+        $nim = $request->nim ?? null;
+        $name = $request->name ?? null;
+        $email = $request->email ?? null;
+        $major = $request->major ?? null;
+
+        // Validate input
+        if (!$nim || !$name || !$email || !$major) {
+            return $this->response->setJSON([
+                'success' => false,
+                'message' => 'All fields are required'
+            ])->setStatusCode(400);
+        }
+
+        // Update mahasiswa data
+        $updateResult = $this->admissionsModel->update($nim, [
+            'name' => $name,
+            'email' => $email,
+            'major' => $major
+        ]);
+
+        if ($updateResult) {
+            return $this->response->setJSON([
+                'success' => true,
+                'message' => 'Student data updated successfully'
+            ])->setStatusCode(200);
+        } else {
+            return $this->response->setJSON([
+                'success' => false,
+                'message' => 'Failed to update student data'
+            ])->setStatusCode(500);
+        }
+    }
+
+    public function delete()
+    {
+        // Check if user is logged in and is admin
+        if (!session('isLoggedIn') || session('userRole') !== 'admin') {
+            return $this->response->setJSON([
+                'success' => false,
+                'message' => 'Unauthorized access'
+            ])->setStatusCode(401);
+        }
+
+        $request = $this->request->getJSON();
+        $nim = $request->nim ?? null;
+
+        // Validate input
+        if (!$nim) {
+            return $this->response->setJSON([
+                'success' => false,
+                'message' => 'NIM is required'
+            ])->setStatusCode(400);
+        }
+
+        // Delete mahasiswa data
+        $deleteResult = $this->admissionsModel->delete($nim);
+
+        if ($deleteResult) {
+            return $this->response->setJSON([
+                'success' => true,
+                'message' => 'Student deleted successfully'
+            ])->setStatusCode(200);
+        } else {
+            return $this->response->setJSON([
+                'success' => false,
+                'message' => 'Failed to delete student'
+            ])->setStatusCode(500);
+        }
     }
 }

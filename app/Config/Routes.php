@@ -16,8 +16,14 @@ $routes->get('logout', 'Auth::logout');
 $routes->group('admin', function($routes) {
     $routes->get('dashboard', 'Dashboard::admin');
     $routes->get('admissions', 'Admissions::index');
+    $routes->post('admissions/update', 'Admissions::update');
+    $routes->post('admissions/delete', 'Admissions::delete');
     $routes->get('applications', 'ApplicationsAdmin::index');
     $routes->post('applications/update-criteria', 'ApplicationsAdmin::updateCriteria');
+    $routes->get('criteria-list', 'CriteriaList::index');
+    $routes->post('criteria-list/delete/(:num)', 'CriteriaList::delete/$1');
+    $routes->get('categories', 'CriteriaList::index');
+    $routes->post('categories/delete/(:num)', 'CriteriaList::delete/$1');
     $routes->get('messages', 'Messages::index');
     $routes->get('pengaturan', 'Settings::index');
 });
