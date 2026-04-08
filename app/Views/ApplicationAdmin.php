@@ -6,7 +6,7 @@
 	<!-- Header -->
 	<div class="mb-8">
 		<p class="text-3xl font-bold text-[#6b3a9d] mt-2">Criteria & Weighting </p>
-		<p class="text-gray-600 mt-4 max-w-2xl">Define how applications are evaluated by assigning relative importance to each qualifying factor.</p>
+		<p class="text-gray-600 mt-4 max-w-2xl">This page is for you to change or adjust the weight of each criterion.</p>
 	</div>
 
 	<div class="grid grid-cols-4 gap-8">
@@ -101,125 +101,45 @@
 		<!-- Main Content Area -->
 		<div class="col-span-3 space-y-4">
 			<!-- Criteria Items -->
-			<!-- Cumulative GPA -->
-			<div class="bg-white rounded-xl p-5 border border-gray-200 hover:border-[#6b3a9d] transition">
-				<div class="flex items-start gap-4">
-					<div class="p-3 bg-[#fbbf24]/20 rounded-lg flex-shrink-0">
-						<i class="bi bi-graph-up text-yellow-400 text-xl"></i>
-					</div>
-					<div class="flex-1">
-						<div class="flex items-center gap-2 mb-1">
-							<h4 class="font-bold text-gray-900">Cumulative GPA</h4>
-							<span class="px-2 py-1 bg-yellow-400 text-white text-xs font-semibold rounded">Benefit</span>
-						</div>
-						<p class="text-sm text-gray-600 mb-3">Selecting student with the highest GPA.</p>
-						<div class="flex gap-3 items-center">
-							<button class="p-2 text-gray-400 hover:text-red-500 transition" title="Delete">
-								<i class="bi bi-trash"></i>
-							</button>
-							<p class="text-gray-300">|</p>
-							<button class="edit-criteria-btn text-xs text-[#6b3a9d] font-semibold hover:text-[#5a2d7f] transition cursor-pointer flex items-center gap-1" data-criteria-name="Cumulative GPA" data-criteria-value="40">
-								<i class="bi bi-pencil text-sm"></i>
-								<span>Edit</span>
-							</button>
-						</div>
-					</div>
-					<div class="flex items-center gap-2 flex-shrink-0">
-						<input type="number" value="40" class="criteria-weight-input w-12 text-right font-bold text-lg border-0 focus:ring-0 p-0 bg-transparent">
-						<span class="text-gray-600 font-semibold">%</span>
-					</div>
-				</div>
-			</div>
-
-			<!-- Parent Income -->
-			<div class="bg-white rounded-xl p-5 border border-gray-200 hover:border-[#6b3a9d] transition duration-200">
-				<div class="flex items-start gap-4">
-					<div class="p-3 bg-red-500/10 rounded-lg flex-shrink-0">
-						<i class="bi bi-file-text text-red-500 text-xl"></i>
-					</div>
-					<div class="flex-1">
-						<div class="flex items-center gap-2 mb-1">
-							<h4 class="font-bold text-gray-900">Parent Income</h4>
-							<span class="px-2 py-1 bg-red-500 text-white text-xs font-semibold rounded">Cost</span>
-						</div>
-						<p class="text-sm text-gray-600 mb-3">Admitting students whose parents have low average incomes.</p>
-						<div class="flex gap-3 items-center">
-							<button class="p-2 text-gray-400 hover:text-red-500 transition" title="Delete">
-								<i class="bi bi-trash"></i>
-							</button>
-							<p class="text-gray-300">|</p>
-							<button class="edit-criteria-btn text-xs text-[#6b3a9d] font-semibold hover:text-[#5a2d7f] transition cursor-pointer flex items-center gap-1" data-criteria-name="Parent Income" data-criteria-value="25">
-								<i class="bi bi-pencil text-sm"></i>
-								<span>Edit</span>
-							</button>
+			<?php if (!empty($criteriaList)): ?>
+				<?php foreach ($criteriaList as $criteria): ?>
+					<?php
+						$criteriaType = strtolower($criteria['criteriaType'] ?? 'benefit');
+						$iconClass = $criteriaType === 'benefit' ? 'bi-graph-up text-yellow-400' : 'bi-file-text text-red-500';
+						$bgColorClass = $criteriaType === 'benefit' ? 'bg-[#fbbf24]/20' : 'bg-red-500/10';
+						$badgeColor = $criteriaType === 'benefit' ? 'bg-yellow-400' : 'bg-red-500';
+						$badgeText = ucfirst($criteriaType);
+					?>
+					<div class="bg-white rounded-xl p-5 border border-gray-200 hover:border-[#6b3a9d] transition">
+						<div class="flex items-start gap-4">
+							<div class="p-3 <?= $bgColorClass ?> rounded-lg flex-shrink-0">
+								<i class="bi <?= $iconClass ?> text-xl"></i>
+							</div>
+							<div class="flex-1">
+								<div class="flex items-center gap-2 mb-1">
+									<h4 class="font-bold text-gray-900"><?= $criteria['criteriaName'] ?></h4>
+									<span class="px-2 py-1 <?= $badgeColor ?> text-white text-xs font-semibold rounded"><?= $badgeText ?></span>
+								</div>
+								<p class="text-sm text-gray-600 mb-3">Evaluation criterion for scholarship selection</p>
+								<div class="flex gap-3 items-center">
+									<button class="p-2 text-gray-400 hover:text-red-500 transition" title="Delete">
+										<i class="bi bi-trash"></i>
+									</button>
+									<p class="text-gray-300">|</p>
+									<button class="edit-criteria-btn text-xs text-[#6b3a9d] font-semibold hover:text-[#5a2d7f] transition cursor-pointer flex items-center gap-1" data-criteria-id="<?= $criteria['idCriteria'] ?>" data-criteria-name="<?= $criteria['criteriaName'] ?>" data-criteria-value="<?= (int)($criteria['criteriaWeight'] * 100) ?>">
+										<i class="bi bi-pencil text-sm"></i>
+										<span>Edit</span>
+									</button>
+								</div>
+							</div>
+							<div class="flex items-center gap-2 flex-shrink-0">
+								<input type="number" value="<?= (int)($criteria['criteriaWeight'] * 100) ?>" class="criteria-weight-input w-12 text-right font-bold text-lg border-0 focus:ring-0 p-0 bg-transparent" disabled>
+								<span class="text-gray-600 font-semibold">%</span>
+							</div>
 						</div>
 					</div>
-					<div class="flex items-center gap-2 flex-shrink-0">
-						<input type="number" value="25" class="criteria-weight-input w-12 text-right font-bold text-lg border-0 focus:ring-0 p-0 bg-transparent">
-						<span class="text-gray-600 font-semibold">%</span>
-					</div>
-				</div>
-			</div>
-
-			<!-- Number of Dependent -->
-			<div class="bg-white rounded-xl p-5 border border-gray-200 hover:border-[#6b3a9d] transition">
-				<div class="flex items-start gap-4">
-					<div class="p-3 bg-[#fbbf24]/20 rounded-lg flex-shrink-0">
-						<i class="bi bi-people text-[#f59e0b] text-xl"></i>
-					</div>
-					<div class="flex-1">
-						<div class="flex items-center gap-2 mb-1">
-							<h4 class="font-bold text-gray-900">Number of Dependent</h4>
-							<span class="px-2 py-1 bg-yellow-400 text-white text-xs font-semibold rounded">Benefit</span>
-						</div>
-						<p class="text-sm text-gray-600 mb-3">Volunteer hours and leadership roles in student organizations.</p>
-						<div class="flex gap-3 items-center">
-							<button class="p-2 text-gray-400 hover:text-red-500 transition" title="Delete">
-								<i class="bi bi-trash"></i>
-							</button>
-							<p class="text-gray-300">|</p>
-							<button class="edit-criteria-btn text-xs text-[#6b3a9d] font-semibold hover:text-[#5a2d7f] transition cursor-pointer flex items-center gap-1" data-criteria-name="Number of Dependent" data-criteria-value="15">
-								<i class="bi bi-pencil text-sm"></i>
-								<span>Edit</span>
-							</button>
-						</div>
-					</div>
-					<div class="flex items-center gap-2 flex-shrink-0">
-						<input type="number" value="15" class="criteria-weight-input w-12 text-right font-bold text-lg border-0 focus:ring-0 p-0 bg-transparent">
-						<span class="text-gray-600 font-semibold">%</span>
-					</div>
-				</div>
-			</div>
-
-			<!-- Non-Academic Achievement -->
-			<div class="bg-white rounded-xl p-5 border border-gray-200 hover:border-[#6b3a9d] transition">
-				<div class="flex items-start gap-4">
-					<div class="p-3 bg-[#fbbf24]/20 rounded-lg flex-shrink-0">
-						<i class="bi bi-cash-coin text-[#f59e0b] text-xl"></i>
-					</div>
-					<div class="flex-1">
-						<div class="flex items-center gap-2 mb-1">
-							<h4 class="font-bold text-gray-900">Non-Academic Achievement</h4>
-							<span class="px-2 py-1 bg-yellow-400 text-white text-xs font-semibold rounded">Benefit</span>
-						</div>
-						<p class="text-sm text-gray-600 mb-3">Based on FAFSA or approved financial aid applications.</p>
-						<div class="flex gap-3 items-center">
-							<button class="p-2 text-gray-400 hover:text-red-500 transition" title="Delete">
-								<i class="bi bi-trash"></i>
-							</button>
-							<p class="text-gray-300">|</p>
-							<button class="edit-criteria-btn text-xs text-[#6b3a9d] font-semibold hover:text-[#5a2d7f] transition cursor-pointer flex items-center gap-1" data-criteria-name="Non-Academic Achievement" data-criteria-value="20">
-								<i class="bi bi-pencil text-sm"></i>
-								<span>Edit</span>
-							</button>
-						</div>
-					</div>
-					<div class="flex items-center gap-2 flex-shrink-0">
-						<input type="number" value="20" class="criteria-weight-input w-12 text-right font-bold text-lg border-0 focus:ring-0 p-0 bg-transparent">
-						<span class="text-gray-600 font-semibold">%</span>
-					</div>
-				</div>
-			</div>
+				<?php endforeach; ?>
+			<?php endif; ?>
 
 			<!-- Add Scoring Dimension -->
 			<div class="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-[#6b3a9d] transition cursor-pointer">
@@ -264,6 +184,24 @@
 
 		<!-- Modal Form -->
 		<form id="editCriteriaForm" class="space-y-6">
+			<input type="hidden" id="modalCriteriaId">
+			
+			<!-- Error Alert -->
+			<div id="modalErrorAlert" class="hidden p-4 bg-red-50 rounded-lg border border-red-200">
+				<div class="flex gap-2">
+					<i class="bi bi-exclamation-circle text-red-600 flex-shrink-0 mt-0.5"></i>
+					<p id="modalErrorText" class="text-xs text-red-800"></p>
+				</div>
+			</div>
+
+			<!-- Success Alert -->
+			<div id="modalSuccessAlert" class="hidden p-4 bg-green-50 rounded-lg border border-green-200">
+				<div class="flex gap-2">
+					<i class="bi bi-check-circle text-green-600 flex-shrink-0 mt-0.5"></i>
+					<p id="modalSuccessText" class="text-xs text-green-800"></p>
+				</div>
+			</div>
+
 			<div>
 				<label class="block text-xs uppercase tracking-wide font-bold text-gray-700 mb-3">Weight Percentage</label>
 				<div class="flex items-center gap-3">
@@ -286,8 +224,9 @@
 				<button type="button" id="cancelModalBtn" class="flex-1 px-4 py-3 text-gray-700 font-semibold border border-gray-300 rounded-lg hover:bg-gray-50 transition">
 					Cancel
 				</button>
-				<button type="submit" class="flex-1 px-4 py-3 bg-[#6b3a9d] text-white font-semibold rounded-lg hover:bg-[#5a2d7f] transition">
-					Save Changes
+				<button type="submit" id="submitModalBtn" class="flex-1 px-4 py-3 bg-[#6b3a9d] text-white font-semibold rounded-lg hover:bg-[#5a2d7f] transition" style="min-height: 48px;">
+					<span id="submitBtnText">Save Changes</span>
+					<i id="submitBtnSpinner" class="bi bi-hourglass-split ml-2 hidden animate-spin" style="display: inline-block;"></i>
 				</button>
 			</div>
 		</form>
@@ -302,6 +241,14 @@ document.addEventListener('DOMContentLoaded', function() {
 	const form = document.getElementById('editCriteriaForm');
 	const weightInput = document.getElementById('modalWeightInput');
 	const modalCriteriaName = document.getElementById('modalCriteriaName');
+	const modalCriteriaId = document.getElementById('modalCriteriaId');
+	const submitBtn = document.getElementById('submitModalBtn');
+	const submitBtnText = document.getElementById('submitBtnText');
+	const submitBtnSpinner = document.getElementById('submitBtnSpinner');
+	const errorAlert = document.getElementById('modalErrorAlert');
+	const errorText = document.getElementById('modalErrorText');
+	const successAlert = document.getElementById('modalSuccessAlert');
+	const successText = document.getElementById('modalSuccessText');
 	let currentEditBtn = null;
 
 	// Open modal
@@ -309,11 +256,17 @@ document.addEventListener('DOMContentLoaded', function() {
 		btn.addEventListener('click', function(e) {
 			e.preventDefault();
 			currentEditBtn = this;
+			const criteriaId = this.getAttribute('data-criteria-id');
 			const criteriaName = this.getAttribute('data-criteria-name');
 			const criteriaValue = this.getAttribute('data-criteria-value');
 			
+			modalCriteriaId.value = criteriaId;
 			modalCriteriaName.textContent = criteriaName;
 			weightInput.value = criteriaValue;
+			
+			// Reset alerts
+			errorAlert.classList.add('hidden');
+			successAlert.classList.add('hidden');
 			
 			modal.classList.remove('hidden');
 			weightInput.focus();
@@ -324,12 +277,18 @@ document.addEventListener('DOMContentLoaded', function() {
 	// Close modal
 	cancelBtn.addEventListener('click', function() {
 		modal.classList.add('hidden');
+		form.reset();
+		errorAlert.classList.add('hidden');
+		successAlert.classList.add('hidden');
 	});
 
 	// Close modal on background click
 	modal.addEventListener('click', function(e) {
 		if (e.target === modal) {
 			modal.classList.add('hidden');
+			form.reset();
+			errorAlert.classList.add('hidden');
+			successAlert.classList.add('hidden');
 		}
 	});
 
@@ -337,28 +296,98 @@ document.addEventListener('DOMContentLoaded', function() {
 	form.addEventListener('submit', function(e) {
 		e.preventDefault();
 		
-		const newValue = weightInput.value;
+		const criteriaId = modalCriteriaId.value;
+		const newValue = parseFloat(weightInput.value);
 		
-		if (newValue === '' || newValue < 0 || newValue > 100) {
-			alert('Please enter a valid number between 0 and 100');
+		errorAlert.classList.add('hidden');
+		successAlert.classList.add('hidden');
+
+		// Frontend validation
+		if (!criteriaId || criteriaId === '') {
+			showError('Criteria ID is missing');
 			return;
 		}
 
-		// Update the input value in the criteria card
-		if (currentEditBtn) {
-			const weightInputField = currentEditBtn.closest('.flex').parentElement.querySelector('.criteria-weight-input');
-			if (weightInputField) {
-				weightInputField.value = newValue;
-			}
+		if (newValue === '' || isNaN(newValue) || newValue < 0 || newValue > 100) {
+			showError('Please enter a valid number between 0 and 100');
+			return;
 		}
 
-		modal.classList.add('hidden');
+		// Convert percentage to decimal (0.00 - 1.00)
+		const weightDecimal = newValue / 100;
+
+		// Show loading state
+		submitBtn.disabled = true;
+		submitBtnText.textContent = 'Saving...';
+		submitBtnSpinner.style.display = 'inline-block';
+
+		// Send AJAX request
+		fetch('/admin/applications/update-criteria', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				'X-Requested-With': 'XMLHttpRequest'
+			},
+			body: JSON.stringify({
+				criteriaId: criteriaId,
+				weight: weightDecimal
+			})
+		})
+		.then(response => response.json())
+		.then(data => {
+			submitBtn.disabled = false;
+			submitBtnText.textContent = 'Save Changes';
+			submitBtnSpinner.style.display = 'none';
+
+			if (data.success) {
+				showSuccess(data.message || 'Criteria weight updated successfully!');
+				
+				// Update the criteria card display
+				if (currentEditBtn) {
+					const weightDisplay = currentEditBtn.closest('.flex').parentElement.querySelector('.criteria-weight-input');
+					if (weightDisplay) {
+						weightDisplay.value = newValue;
+					}
+				}
+
+				// Close modal after 1.5 seconds
+				setTimeout(() => {
+					modal.classList.add('hidden');
+					form.reset();
+					errorAlert.classList.add('hidden');
+					successAlert.classList.add('hidden');
+				}, 1500);
+			} else {
+				showError(data.message || 'Failed to update criteria weight');
+			}
+		})
+		.catch(error => {
+			submitBtn.disabled = false;
+			submitBtnText.textContent = 'Save Changes';
+			submitBtnSpinner.style.display = 'none';
+			console.error('Error:', error);
+			showError('An error occurred while saving. Please try again.');
+		});
 	});
+
+	// Helper functions
+	function showError(message) {
+		errorText.textContent = message;
+		errorAlert.classList.remove('hidden');
+	}
+
+	function showSuccess(message) {
+		successText.textContent = message;
+		successAlert.classList.remove('hidden');
+	}
 
 	// Close modal on ESC key
 	document.addEventListener('keydown', function(e) {
 		if (e.key === 'Escape') {
 			modal.classList.add('hidden');
+			form.reset();
+			errorAlert.classList.add('hidden');
+			successAlert.classList.add('hidden');
 		}
 	});
 });

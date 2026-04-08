@@ -17,6 +17,7 @@ $routes->group('admin', function($routes) {
     $routes->get('dashboard', 'Dashboard::admin');
     $routes->get('admissions', 'Admissions::index');
     $routes->get('applications', 'ApplicationsAdmin::index');
+    $routes->post('applications/update-criteria', 'ApplicationsAdmin::updateCriteria');
     $routes->get('messages', 'Messages::index');
     $routes->get('pengaturan', 'Settings::index');
 });

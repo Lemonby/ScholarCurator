@@ -15,21 +15,21 @@
 <main class="mx-auto grid w-full max-w-6xl overflow-hidden rounded-2xl border border-[#f0e6f8] bg-white shadow-[0_20px_50px_rgba(74,28,125,0.12)] lg:grid-cols-2">
 	<section class="hidden bg-linear-to-br from-[#4d1e82] via-[#5f249f] to-[#6c2eb0] p-10 text-white lg:block">
 		<h1 class="text-4xl font-black tracking-tight">ScholarCurator</h1>
-		<p class="mt-4 leading-relaxed text-[#e9d9fb]">Unlock your academic potential with curated scholarship suggestions and one dashboard for every deadline.</p>
+		<p class="mt-4 leading-relaxed text-[#e9d9fb]">Transparent scholarship assessment system using fair, data-driven methodology with measurable SAW approach.</p>
 		<div class="mt-6 space-y-4">
 			<div class="rounded-xl border border-white/20 bg-white/10 p-4">
-				<h3 class="text-base font-bold">Curated Matching</h3>
-				<p class="mt-2 text-sm text-[#efe2ff]">Identifikasi peluang beasiswa yang cocok dengan profil akademikmu secara cepat.</p>
+				<h3 class="text-base font-bold">Transparent Assessment</h3>
+				<p class="mt-2 text-sm text-[#efe2ff]">View weight calculations and scores for each criterion in your selection process in real-time.</p>
 			</div>
 			<div class="rounded-xl border border-white/20 bg-white/10 p-4">
-				<h3 class="text-base font-bold">Effortless Tracking</h3>
-				<p class="mt-2 text-sm text-[#efe2ff]">Pantau tenggat waktu aplikasi, kebutuhan dokumen, dan progres pendaftaran.</p>
+				<h3 class="text-base font-bold">Science-Based Decision</h3>
+				<p class="mt-2 text-sm text-[#efe2ff]">SAW algorithm ensures efficiency, consistency, and accountability in every decision.</p>
 			</div>
 		</div>
 		<div class="mt-8 rounded-xl border border-white/20 bg-white/10 p-4 text-sm text-[#efe2ff]">
-			<p class="font-semibold">Dummy Accounts</p>
+			<p class="font-semibold">Quick Access</p>
 			<p class="mt-1">Admin: demo@scholarcurator.id / password123</p>
-			<p>Mahasiswa: mahasiswa@scholarcurator.id / password123</p>
+			<p>Student: mahasiswa@scholarcurator.id / password123</p>
 		</div>
 	</section>
 
