@@ -22,6 +22,8 @@ $routes->group('admin', function($routes) {
     $routes->post('applications/update-criteria', 'ApplicationsAdmin::updateCriteria');
     $routes->get('criteria-list', 'CriteriaList::index');
     $routes->post('criteria-list/delete/(:num)', 'CriteriaList::delete/$1');
+    $routes->get('sub-criteria-list', 'SubCriteriaList::index');
+    $routes->post('sub-criteria-list/delete/(:num)', 'SubCriteriaList::delete/$1');
     $routes->get('categories', 'CriteriaList::index');
     $routes->post('categories/delete/(:num)', 'CriteriaList::delete/$1');
     $routes->get('messages', 'Messages::index');

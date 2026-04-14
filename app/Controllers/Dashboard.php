@@ -26,7 +26,7 @@ class Dashboard extends BaseController
 
 		$criteriaList = $criteriaModel->getAllCriteria();
 
-		return view('DashboardAdmin', [
+		return view('admin/DashboardAdmin', [
 			'userName' => session('userName') ?? 'Admin',
 			'userEmail' => session('userEmail') ?? 'demo@scholarcurator.id',
 			'mahasiswaCount' => $mahasiswaCount,
@@ -43,7 +43,7 @@ class Dashboard extends BaseController
 			return redirect()->to('/login');
 		}
 
-		return view('DashboardMahasiswa', [
+		return view('mahasiswa/DashboardMahasiswa', [
 			'userName' => session('userName') ?? 'Mahasiswa',
 			'userEmail' => session('userEmail') ?? 'mahasiswa@scholarcurator.id',
 		]);

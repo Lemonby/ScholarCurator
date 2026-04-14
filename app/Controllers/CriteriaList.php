@@ -31,7 +31,7 @@ class CriteriaList extends BaseController
         // Get subcriteria data
         $subcriteriaList = $this->criteriaModel->getAllSubCriteria();
 
-        return view('CriteriaListView', [
+        return view('admin/CriteriaListView', [
             'userName' => session('userName') ?? 'admin',
             'userEmail' => session('userEmail') ?? 'asep@scholar.com',
             'criteriaList' => $criteriaWithCode,

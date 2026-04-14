@@ -10,7 +10,7 @@ class ApplicationsMahasiswa extends BaseController {
             return redirect()->to('/login');
         }
 
-        return view('ApplyScholarship', [
+        return view('mahasiswa/ApplyScholarship', [
             'userName' => session('userName') ?? 'Admin',
             'userEmail' => session('userEmail') ?? 'demo@scholarcurator.id'
         ]);

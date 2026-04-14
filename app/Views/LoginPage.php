@@ -66,10 +66,13 @@
 					<input id="fullName" name="fullName" type="text" value="<?= esc(old('fullName')) ?>" class="w-full rounded-xl border border-[#ece1f4] bg-[#faf7fd] px-3.5 py-2.5 text-sm text-[#2b1f3b] outline-none ring-0 transition focus:border-[#bf9be7] focus:bg-white" required>
 				</div>
 				<div>
-					<label for="jurusan" class="mb-1.5 block text-[11px] font-bold uppercase tracking-[0.08em] text-[#7c728d]">Major</label>
-					<input id="jurusan" name="jurusan" type="text" value="<?= esc(old('jurusan')) ?>" class="w-full rounded-xl border border-[#ece1f4] bg-[#faf7fd] px-3.5 py-2.5 text-sm text-[#2b1f3b] outline-none ring-0 transition focus:border-[#bf9be7] focus:bg-white" required>
+					<label for="nim" class="mb-1.5 block text-[11px] font-bold uppercase tracking-[0.08em] text-[#7c728d]">NIM</label>
+					<input id="nim" name="nim" type="text" value="<?= esc(old('nim')) ?>" class="w-full rounded-xl border border-[#ece1f4] bg-[#faf7fd] px-3.5 py-2.5 text-sm text-[#2b1f3b] outline-none ring-0 transition focus:border-[#bf9be7] focus:bg-white" required>
 				</div>
 			</div>
+
+			<label for="major" class="mb-1.5 mt-3 block text-[11px] font-bold uppercase tracking-[0.08em] text-[#7c728d]">Major</label>
+			<input id="major" name="major" type="text" value="<?= esc(old('major')) ?>" class="w-full rounded-xl border border-[#ece1f4] bg-[#faf7fd] px-3.5 py-2.5 text-sm text-[#2b1f3b] outline-none ring-0 transition focus:border-[#bf9be7] focus:bg-white" required>
 
 			<label for="registerEmail" class="mb-1.5 mt-3 block text-[11px] font-bold uppercase tracking-[0.08em] text-[#7c728d]">Email Address</label>
 			<input id="registerEmail" name="email" type="email" value="<?= esc(old('email')) ?>" class="w-full rounded-xl border border-[#ece1f4] bg-[#faf7fd] px-3.5 py-2.5 text-sm text-[#2b1f3b] outline-none ring-0 transition focus:border-[#bf9be7] focus:bg-white" required>

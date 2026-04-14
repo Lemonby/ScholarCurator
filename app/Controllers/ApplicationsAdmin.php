@@ -15,7 +15,7 @@ class ApplicationsAdmin extends BaseController{
             return redirect()->to('/login');
         }
 
-        return view('ApplicationAdmin', [
+        return view('admin/ApplicationAdmin', [
             'userName' => session('userName') ?? 'Admin',
             'userEmail' => session('userEmail') ?? 'demo@scholarcurator.id',
             'criteriaList' => $this->criteriaModel->getAllCriteria(),
@@ -37,6 +37,7 @@ class ApplicationsAdmin extends BaseController{
         $request = $this->request->getJSON();
         $criteriaId = $request->criteriaId ?? null;
         $newWeight = $request->weight ?? null;
+        $criteriaType = $request->criteriaType ?? null;
 
         // Validate input
         if (!$criteriaId || $newWeight === null) {
@@ -46,13 +47,21 @@ class ApplicationsAdmin extends BaseController{
             ])->setStatusCode(400);
         }
 
+        // Validate criteria type
+        if ($criteriaType && !in_array(strtolower($criteriaType), ['benefit', 'cost'])) {
+            return $this->response->setJSON([
+                'success' => false,
+                'message' => 'Invalid criteria type. Must be either "benefit" or "cost"'
+            ])->setStatusCode(400);
+        }
+
         $newWeight = (float) $newWeight;
 
         // Validate weight value
-        if ($newWeight < 0 || $newWeight > 100) {
+        if ($newWeight < 0 || $newWeight > 1) {
             return $this->response->setJSON([
                 'success' => false,
-                'message' => 'Weight must be between 0 and 100'
+                'message' => 'Weight must be between 0 and 1'
             ])->setStatusCode(400);
         }
 
@@ -76,7 +85,7 @@ class ApplicationsAdmin extends BaseController{
 
         $totalWeight = $totalWithoutCurrent + $newWeight;
 
-        // Validate total weight doesn't exceed 100%
+        // Validate total weight doesn't exceed 1.0
         if ($totalWeight > 1.0) {
             $totalPercent = (int)($totalWeight * 100);
             return $this->response->setJSON([
@@ -86,10 +95,18 @@ class ApplicationsAdmin extends BaseController{
             ])->setStatusCode(400);
         }
 
-        // Update criteria weight
-        $updateResult = $this->criteriaModel->update($criteriaId, [
+        // Prepare update data
+        $updateData = [
             'criteriaWeight' => $newWeight
-        ]);
+        ];
+
+        // Add criteria type if provided
+        if ($criteriaType) {
+            $updateData['criteriaType'] = ucfirst(strtolower($criteriaType));
+        }
+
+        // Update criteria
+        $updateResult = $this->criteriaModel->update($criteriaId, $updateData);
 
         if ($updateResult) {
             $newBenefits = $this->criteriaModel->sumCriteriaBenefits();
@@ -97,14 +114,14 @@ class ApplicationsAdmin extends BaseController{
             
             return $this->response->setJSON([
                 'success' => true,
-                'message' => 'Criteria weight updated successfully',
+                'message' => 'Criteria updated successfully',
                 'newBenefits' => $newBenefits,
                 'newCosts' => $newCosts
             ])->setStatusCode(200);
         } else {
             return $this->response->setJSON([
                 'success' => false,
-                'message' => 'Failed to update criteria weight'
+                'message' => 'Failed to update criteria'
             ])->setStatusCode(500);
         }
     }

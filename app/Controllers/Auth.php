@@ -75,10 +75,11 @@ class Auth extends BaseController
 	public function register(): RedirectResponse
 	{
 		$rules = [
-			'full_name'  => 'required|min_length[3]',
-			'university' => 'required|min_length[3]',
-			'email'      => 'required|valid_email',
-			'password'   => 'required|min_length[6]',
+			'fullName'  => 'required|min_length[3]',
+			'nim'       => 'required|numeric|is_unique[mahasiswa.NIM]',
+			'major'     => 'required|min_length[2]',
+			'email'     => 'required|valid_email|is_unique[mahasiswa.email]',
+			'password'  => 'required|min_length[6]',
 		];
 
 		if (! $this->validate($rules)) {
@@ -88,10 +89,31 @@ class Auth extends BaseController
 				->with('register_errors', $this->validator->getErrors());
 		}
 
-		// Placeholder until actual user persistence is implemented.
-		return redirect()->to('/login#login')
-			->with('activeTab', 'login')
-			->with('message', 'Registrasi berhasil divalidasi. Integrasi penyimpanan user belum diaktifkan.');
+		$data = [
+			'fullName' => $this->request->getPost('fullName'),
+			'nim'      => $this->request->getPost('nim'),
+			'major'    => $this->request->getPost('major'),
+			'email'    => $this->request->getPost('email'),
+			'password' => $this->request->getPost('password'),
+		];
+
+		try {
+			if ($this->loginModel->createMahasiswa($data)) {
+				return redirect()->to('/login#login')
+					->with('activeTab', 'login')
+					->with('message', 'Registrasi berhasil! Silakan login dengan email dan password Anda.');
+			} else {
+				return redirect()->to('/login#register')
+					->withInput()
+					->with('activeTab', 'register')
+					->with('register_errors', ['Terjadi kesalahan saat menyimpan data. Silakan coba lagi.']);
+			}
+		} catch (\Exception $e) {
+			return redirect()->to('/login#register')
+				->withInput()
+				->with('activeTab', 'register')
+				->with('register_errors', ['Terjadi kesalahan: ' . $e->getMessage()]);
+		}
 	}
 
 	public function logout(): RedirectResponse

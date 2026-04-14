@@ -168,9 +168,6 @@ Class Admissions extends BaseController{
 
             // 7. Insert/Update ke Result Table
             try {
-                // Tentukan threshold untuk pass/fail
-                // Strategi: Hanya Top 5 = pass, Sisanya = fail
-                $totalKandidat = count($hasilRanking);
                 
                 // IMPORTANT: Deduplikasi ranking by NIM (ambil skor tertinggi jika duplikat)
                 // Karena setiap NIM bisa punya banyak assessment rows (1 per kriteria)
@@ -239,7 +236,7 @@ Class Admissions extends BaseController{
         // Slice data untuk page tersebut
         $paginatedMahasiswa = array_slice($dataMahasiswa, $startIndex, $itemsPerPage);
 
-        return view('AdmissionsAdmin', [
+        return view('admin/AdmissionsAdmin', [
             'userName' => session('userName') ?? 'Admin',
             'userEmail' => session('userEmail') ?? 'admin@example.com',
             'mahasiswaList' => $paginatedMahasiswa,
